@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ATM & Cash Deposit</title>
+  <!-- Font Awesome from font.css -->
+  <link rel="stylesheet" href="font.css"/>
+  <!-- Toastify CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+  <!-- Leaflet CSS for OpenStreetMap -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    .top-left, .top-right {
+      color: #39cd33de;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .top-title {
+      font-weight: 600;
+      font-size: 17px;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    /* Search bar */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      padding: 8px 12px;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+    }
+    .search-bar input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 15px;
+      padding: 8px 8px 8px 30px; /* Space for icon */
+      border-radius: 5px;
+      background-color: #eee;
+    }
+    .search-bar .fa-search {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Show options */
+    .show-options {
+      background-color: #fff;
+      padding: 10px 16px 4px;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #ddd;
+    }
+    .show-line {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .show-line label {
+      margin-right: 6px;
+    }
+    #showLabel{
+        background-color: #999;
+        padding: 4px 4px 4px 45px;
+        font-weight: 400;
+    }
+    .circles {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .circle-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .circle-item.active {
+      opacity: 1;
+      font-weight: bold;
+    }
+    .circle {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+    .atm-circle {
+      background-color: #4fc476;
+    }
+    .deposit-circle {
+      background-color: #5c5cad;
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+      padding: 0 16px;
+      line-height: 1.4;
+    }
+
+    /* Map area */
+    .map-container {
+      flex: 1;
+      position: relative;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Location note */
+    .location-note {
+      font-size: 12px;
+      text-align: center;
+      padding: 10px 16px;
+      background-color: rgba(255,255,255,0.9);
+    }
+    .location-note strong {
+      color: #007bff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-left" id="cancelBtn">Cancel</div>
+    <div class="top-title">ATM & Cash Deposit</div>
+    <div class="top-right" id="listBtn">List</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <!-- Search bar -->
+    <div class="search-bar">
+      <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          placeholder="Enter city or ZIP"
+          aria-label="Search for city or ZIP code"
+        />
+      </div>
+    </div>
+
+    <!-- Show options -->
+    <div class="show-options">
+      <div class="show-line">
+        <label id="showLabel">SHOW:</label>
+        <div class="circles">
+          <div
+            class="circle-item active"
+            id="atmOption"
+            role="button"
+            aria-label="Show ATM locations"
+          >
+            <div class="circle atm-circle"></div>
+            <span>ATM</span>
+          </div>
+          <div
+            class="circle-item"
+            id="depositOption"
+            role="button"
+            aria-label="Show Deposit locations"
+          >
+            <div class="circle deposit-circle"></div>
+            <span>DEPOSIT</span>
+          </div>
+        </div>
+      </div>
+      <div class="disclaimer">
+        Fees and limits may apply. Please see your terms and conditions for details.
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+
+    <!-- Location note -->
+    <div class="location-note">
+      Turn on location services in
+      <strong id="settingsLink">Settings</strong>
+      to allow Green Dot to determine your location.
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Toastify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize map
+      const map = L.map('map').setView([-16.2902, -63.5887], 4); // Default: Bolivia
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
+      }).addTo(map);
+
+      // Mock markers (replace with real data if available)
+      const atmMarkers = [
+        L.marker([-16.5, -68.15]).bindPopup('ATM - La Paz'),
+        L.marker([-17.78, -63.18]).bindPopup('ATM - Santa Cruz')
+      ];
+      const depositMarkers = [
+        L.marker([-16.52, -68.17]).bindPopup('Deposit - La Paz Bank'),
+        L.marker([-17.8, -63.2]).bindPopup('Deposit - Santa Cruz Bank')
+      ];
+      let currentMarkers = atmMarkers;
+      currentMarkers.forEach(marker => marker.addTo(map));
+
+      // Navigation
+      function goTo(id, url) {
+        const t = document.getElementById(id);
+        t.addEventListener('click', () => {
+          window.location.href = `./${url}.html`;
+        });
+      }
+      goTo('cancelBtn', 'dashboard');
+
+      // List view
+      document.getElementById('listBtn').addEventListener('click', () => {
+        Toastify({
+          text: 'Showing list view of locations...',
+          duration: 3000,
+          gravity: 'top',
+          position: 'center'
+        }).showToast();
+      });
+
+      // Filter toggles
+      const atmOption = document.getElementById('atmOption');
+      const depositOption = document.getElementById('depositOption');
+
+      function updateMarkers(type) {
+        // Clear current markers
+        currentMarkers.forEach(marker => map.removeLayer(marker));
+        // Set new markers
+        currentMarkers = type === 'atm' ? atmMarkers : depositMarkers;
+        currentMarkers.forEach(marker => marker.addTo(map));
+      }
+
+      atmOption.addEventListener('click', () => {
+        atmOption.classList.add('active');
+        depositOption.classList.remove('active');
+        updateMarkers('atm');
+        Toastify({
+          text: 'Showing ATM locations...',
+          duration: 3000,
+          gravity: 'top',
+          position: 'center'
+        }).showToast();
+      });
+
+      depositOption.addEventListener('click', () => {
+        depositOption.classList.add('active');
+        atmOption.classList.remove('active');
+        updateMarkers('deposit');
+        Toastify({
+          text: 'Showing Deposit locations...',
+          duration: 3000,
+          gravity: 'top',
+          position: 'center'
+        }).showToast();
+      });
+
+      // Search functionality
+      const searchInput = document.querySelector('.search-bar input');
+      searchInput.addEventListener('keypress', async e => {
+        if (e.key === 'Enter') {
+          const query = searchInput.value.trim();
+          if (!query) return;
+
+          try {
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`
+            );
+            const data = await response.json();
+            if (data.length > 0) {
+              const { lat, lon } = data[0];
+              map.setView([lat, lon], 12);
+              Toastify({
+                text: `Showing results for ${query}`,
+                duration: 3000,
+                gravity: 'top',
+                position: 'center'
+              }).showToast();
+            } else {
+              Toastify({
+                text: 'Location not found.',
+                duration: 3000,
+                gravity: 'top',
+                position: 'center'
+              }).showToast();
+            }
+          } catch {
+            Toastify({
+              text: 'Error searching location.',
+              duration: 3000,
+              gravity: 'top',
+              position: 'center'
+            }).showToast();
+          }
+        }
+      });
+
+      // Geolocation
+      document.getElementById('settingsLink').addEventListener('click', () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              const { latitude, longitude } = position.coords;
+              map.setView([latitude, longitude], 12);
+              L.marker([latitude, longitude])
+                .addTo(map)
+                .bindPopup('Your Location')
+                .openPopup();
+              Toastify({
+                text: 'Showing your location...',
+                duration: 3000,
+                gravity: 'top',
+                position: 'center'
+              }).showToast();
+            },
+            () => {
+              Toastify({
+                text: 'Geolocation permission denied.',
+                duration: 3000,
+                gravity: 'top',
+                position: 'center'
+              }).showToast();
+            }
+          );
+        } else {
+          Toastify({
+            text: 'Geolocation not supported.',
+            duration: 3000,
+            gravity: 'top',
+            position: 'center'
+          }).showToast();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

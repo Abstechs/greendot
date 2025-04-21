@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings - Green Dot Bank</title>
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Toastify CSS for notifications -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+  <style>
+    :root {
+      --green-bg: #39cd33de;       /* Bright green */
+      --bg-white: #fff;            /* Light background */
+      --text-light: #fff;          /* White text */
+      --text-dark: #333;           /* Dark text */
+      --btn-bg: #66dd66;           /* Slightly lighter green for buttons */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background-color: #fff;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      color: var(--text-light);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header .icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+    }
+    .header #notif {
+      color: var(--green-bg);
+    }
+    .header .icon sup {
+      background: var(--green-bg);
+      color: var(--text-light);
+      border-radius: 50%;
+      padding: 2px 5px;
+      font-size: 0.6rem;
+      vertical-align: top;
+      margin-left: 2px;
+    }
+
+    /* Menu */
+    .menu {
+      background-color: #fff;
+      margin: 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      flex: 1;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 1rem;
+      color: var(--text-dark);
+    }
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+    .menu-item .left {
+      display: flex;
+      align-items: center;
+    }
+    /* Center icon inside fixed-size box */
+    .menu-item .left i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+      color: var(--green-bg);
+      font-size: 1.2rem;
+      box-shadow: -1px 3px 2px #ddd;
+      border-radius: 50%;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+    .menu-item .title {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    .menu-item .subtitle {
+      font-size: 0.8rem;
+      color: #777;
+    }
+    /* Chevron arrow */
+    .menu-item .arrow {
+      font-size: 1rem;
+      color: #aaa;
+    }
+
+    /* Account Numbers Section */
+    .account-numbers {
+      background-color: #f5f5f5;
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+    .account-numbers h3 {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+    .account-numbers .numbers {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+    .account-numbers .numbers div {
+      display: flex;
+      flex-direction: column;
+    }
+    .account-numbers .numbers span {
+      font-size: 0.9rem;
+      color: #777;
+    }
+    .account-numbers .numbers p {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-top: 5px;
+    }
+
+    /* Log Out Button */
+    .logout-btn {
+      background-color: var(--green-bg);
+      color: var(--text-light);
+      border: none;
+      padding: 12px 0;
+      width: 90%;
+      margin: 20px auto;
+      display: block;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .bottom-nav div {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #777;
+      cursor: pointer;
+    }
+    .bottom-nav div.active {
+      color: var(--green-bg);
+    }
+    .bottom-nav i {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1><img id="gdotLogo" width="85" src="./GDOT_BIG.png" alt="GREEN DOT"></h1>
+    <div class="icon">
+      <i id="notif" class="fas fa-comment-dots"></i><sup>50</sup>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu">
+    <div class="menu-item" id="personalInfo">
+      <div class="left">
+        <i class="fas fa-user"></i>
+        <div>
+          <div class="title">Personal Info</div>
+          <div class="subtitle">Address, email, mobile number</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="securitySettings">
+      <div class="left">
+        <i class="fas fa-shield-alt"></i>
+        <div>
+          <div class="title">Security Settings</div>
+          <div class="subtitle">Auto-logout, trusted devices, and more</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="manageCard">
+      <div class="left">
+        <i class="fas fa-credit-card"></i>
+        <div>
+          <div class="title">Manage Card</div>
+          <div class="subtitle">Change ATM PIN, Lock Card, Report problems</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="notifications">
+      <div class="left">
+        <i class="fas fa-bell"></i>
+        <div>
+          <div class="title">Notifications</div>
+          <div class="subtitle">Customize alerts</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="about">
+      <div class="left">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <div class="title">About</div>
+          <div class="subtitle">Legal & privacy info</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="getHelp">
+      <div class="left">
+        <i class="fas fa-question-circle"></i>
+        <div>
+          <div class="title">Get Help</div>
+          <div class="subtitle">Chat with us or contact us</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+  </div>
+
+  <!-- Account Numbers -->
+  <div class="account-numbers">
+    <h3>Account Numbers</h3>
+    <div class="numbers">
+      <div>
+        <span>Routing #:</span>
+        <p>124 303 120</p>
+      </div>
+      <div>
+        <span>Account #:</span>
+        <p>4969 5457 1587</p>
+      </div>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Log Out</button>
+  </div>
+  
+  <br>
+  <p></p>
+  <br>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div id="navHome"><i class="fas fa-home"></i>Home</div>
+    <div id="navDeposit"><i class="fas fa-download"></i>Deposit</div>
+    <div id="navPay"><i class="fas fa-upload"></i>Pay</div>
+    <div class="active"><i class="fas fa-cog"></i>Settings</div>
+  </div>
+
+  <!-- Toastify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Auth Script -->
+  <script src="auth.js"></script>
+  <!-- Loader Script -->
+  <script src="loader.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Protect the route
+      protectRoute();
+
+      // Navigation for menu items
+      goTo('personalInfo', 'personal_info');
+      goTo('securitySettings', 'security_settings');
+      goTo('manageCard', 'manage_card');
+      goTo('notifications', 'notifications');
+      goTo('about', 'about');
+      goTo('getHelp', 'get_help');
+
+      // Bottom navigation
+      goTo('navHome', 'dashboard');
+      goTo('navDeposit', 'deposit');
+      goTo('navPay', 'pay');
+
+      // Log Out
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        loader('Logging out...');
+        logout(() => {
+          setTimeout(() => {
+            Toastify({
+              text: 'You have been logged out.',
+              duration: 3000,
+              gravity: 'top',
+              position: 'center',
+              style: {
+                background: '#39cd33de'
+              }
+            }).showToast();
+            window.location.href = './login.html';
+          }, 1000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

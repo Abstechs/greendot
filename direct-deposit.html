@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0"/>
+  <title>Direct Deposit</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Toastify CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #0a0a0a;
+      line-height: 1.4;
+      padding-top: 60px; /* leave space for fixed header */
+    }
+
+    /* Fixed header with back arrow icon */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #fff;
+      border-bottom: 1px solid #f4f4f4;
+      padding: 12px 16px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header .done {
+      align-items: right;
+      color: #6cc24a;
+      margin-right: 12px;
+      cursor: pointer;
+      
+    }
+    .header .title {
+      font-size: 18px;
+      font-weight: 600;
+      align-self: center;
+    }
+
+    /* Main container without extra shadow */
+    .container {
+      background: #f4f4f4;
+      border-radius: 0px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 400px;
+    }
+
+    /* Page title – left-aligned and bold */
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .ins_h{
+        font-weight: 700;
+    }
+    .ins_d{
+        font-size: 0.75rem;
+        color:#777;
+        line-height: 1.3;
+    }
+
+    /* Subtitle/intro text – aligned left */
+    .subtitle {
+      color: #555;
+      font-size: 15px;
+      text-align: left;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Feature list */
+    .features {
+      margin-bottom: 20px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      font-size: 14.5px;
+    }
+    .feature-item i {
+      color: #6cc24a;
+      font-size: 20px;
+      margin-right: 10px;
+      margin-top: 2px;
+    }
+
+    /* Divider line */
+    .divider {
+      height: 1px;
+      background-color: #d5d5d5;
+      margin: 20px 0;
+    }
+
+    /* Account info with green subheading */
+    .account-info {
+      margin-bottom: 20px;
+      font-size: 15px;
+      width: 100%;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f4f4f4;/* 😀 */
+      align-items: center;
+      background-color: #fff;/* 😀 */
+      padding-left: 8px;
+      border-radius: 8px;
+      width: 100%;/* 😀 */
+    }
+    .info-label {
+      font-weight: 500;
+      color: #6cc24a; /* shade of green */
+    }
+    .info-value {
+      color: #000;
+      font-weight: 600;
+    }
+
+    /* Disclaimer/explanatory text */
+    .disclaimer {
+      font-size: 12.5px;
+      line-height: 1.4;
+      color: #777;
+      margin-bottom: 20px;
+    }
+    .disclaimer a {
+      color: #6cc24a;
+      text-decoration: none;
+    }
+    .disclaimer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Buttons */
+    .btn {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      padding: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background-color: #6cc24a;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background-color: #60af43;
+    }
+    .btn-outline {
+      background: #fff;
+      border: 2px solid #6cc24a;
+      color: #6cc24a;
+    }
+    .btn-outline:hover {
+      background-color: #f0fff0;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 16px;
+        margin: 20px 8px;
+        max-width: 100%;
+      }
+      .page-title {
+        font-size: 18px;
+      }
+      .feature-item {
+        font-size: 14px;
+      }
+      .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .btn {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed header -->
+  <div class="header">
+      <!--  
+    <i class="fas fa-arrow-left back" id="back"></i> -->
+    <div></div>
+    <div class="title">Direct Deposit</div>
+    <div class="done" id="back">Done</div>
+  </div>
+
+  <!-- Main container -->
+  <div class="container">
+    <!-- Main title, left-aligned -->
+    <div class="page-title">Get more with early direct deposit</div>
+
+    <!-- Subtitle/intro text -->
+    <div class="subtitle">
+      Deposit all or some of your paycheck for an easy &amp; secure way to manage your money:
+    </div>
+
+    <!-- Features list -->
+    <div class="features">
+      <div class="feature-item">
+        <i class="fas fa-calendar-check"></i>
+        <div><span class="ins_h">Get your pay up to 2 days early<sup>¹</sup></span><br>
+        <span class="ins_d">& government benefits up to 4 days early</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-shield-alt"></i>
+        <div><span class="ins_h">Unlock overdraft protection up to $200<sup>²</sup></span><br>
+        <span class="ins_d">with opt in and eligible direct deposit</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-bell"></i>
+        <div><span class="ins_h">Get notified with direct deposit alerts<sup>³</sup></span><br>
+        <span class="ins_d">Message and data rates may apply</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ins_d">
+        It's easy! Just provide your account and bank routing numbers to your payroll or benefits provider by quickly emailing your information using the buttons below
+    </div>
+
+    <!-- Divider line -->
+    <div class="divider"></div>
+
+    <!-- Account info -->
+    <div class="account-info">
+      <div class="info-row">
+        <span class="info-label">Routing #</span>
+        <span class="info-value">124 303 120</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Account #</span>
+        <span class="info-value">4969 5457 1587</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Account Type</span>
+        <span class="info-value">Checking</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Bank Name</span>
+        <span class="info-value">Green Dot Bank</span>
+      </div>
+    </div>
+
+    <!-- Disclaimer text -->
+    <div class="disclaimer">
+      Just provide your account and bank routing numbers to your payroll or benefits provider to enroll in direct deposit.
+      <br><br>
+      For federal government benefits, enroll by visiting 
+      <a href="https://godirect.gov" target="_blank">GoDirect.gov</a>
+    </div>
+
+    <!-- Buttons -->
+    <button class="btn btn-primary" id="emailMeBtn">Email Me</button>
+    <button class="btn btn-outline" id="emailEmployerBtn">Email My Employer</button>
+  </div>
+
+  <!-- Toastify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Loader Script -->
+  <script src="loader.js"></script>
+  <script>
+       // Navigation for the back button.
+    function goTo(id, url) {
+      const t = document.getElementById(id);
+      t.addEventListener('click', () => { 
+        window.location.href = `./${url}.html`; 
+      });
+    }
+    goTo('back', 'dashboard');
+    // Back button navigation (example functionality)
+    document.getElementById('back').addEventListener('click', function(){
+      window.history.back();
+    });
+
+    // Example button functionality
+    document.getElementById('emailMeBtn').addEventListener('click', function(){
+      Toastify({
+            text: 'Email sent to you!',
+            duration: 3000,
+            gravity: 'top',
+            position: 'center'
+          }).showToast();
+    });
+
+    document.getElementById('emailEmployerBtn').addEventListener('click', function(){
+      Toastify({
+            text: 'Email sent to employer!',
+            duration: 3000,
+            gravity: 'top',
+            position: 'center'
+          }).showToast();
+    });
+    
+function toast (message, duration = 3000){
+    Toastify({
+            text: message,
+            duration: duration,
+            gravity: 'top',
+            position: 'center'
+          }).showToast();
+}
+//toast('Howre you ?');
+  </script>
+</body>
+</html>

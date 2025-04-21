@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deposit - Green Dot Bank</title>
+
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Toastify CSS for notifications -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+
+  <style>
+    :root {
+      --green-bg: #39cd33de;       /* Bright green */
+      --bg-white: #fff;            /* Light background */
+      --text-light: #fff;          /* White text */
+      --text-dark: #333;           /* Dark text */
+      --btn-bg: #66dd66;           /* Slightly lighter green for buttons */
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: var(--bg-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background-color: #fff;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      color: var(--text-light);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header .icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+    }
+    .header #notif {
+      color: var(--green-bg);
+    }
+    .notif {
+      background-color: var(--green-bg);
+    }
+    .header .icon sup {
+      background: var(--green-bg);
+      color: var(--text-light);
+      border-radius: 50%;
+      padding: 2px 5px;
+      font-size: 0.6rem;
+      vertical-align: top;
+      margin-left: 2px;
+    }
+
+    /* Deposit Section */
+    .deposit-section {
+      background-color: var(--green-bg);
+      padding: 20px;
+      text-align: center;
+      color: var(--text-light);
+    }
+    .deposit-section h2 {
+      margin: 0 0 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .deposit-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .deposit-option {
+      background-color: var(--btn-bg);
+      border: 2px solid #2bff5866;
+      border-radius: 20px;
+      padding: 15px;
+      color: var(--text-light);
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .deposit-option i {
+      font-size: 1.2rem;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .bottom-nav div {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #777;
+      cursor: pointer;
+    }
+    .bottom-nav div.active {
+      color: var(--green-bg);
+    }
+    .bottom-nav i {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1><img id="gdotLogo" width="85" src="./GDOT_BIG.png" alt="GREEN DOT"></h1>
+    <div class="icon">
+      <i id="notif" class="fas fa-comment-dots"></i><sup class="notif">50</sup>
+    </div>
+  </div>
+
+  <!-- Deposit Section -->
+  <div class="deposit-section">
+    <h2>Deposit Money</h2>
+    <div class="deposit-options">
+      <div class="deposit-option" id="directDeposit">
+        <i class="fas fa-building"></i>
+        <span>Direct Deposit</span>
+      </div>
+      <div class="deposit-option" id="mobileCheck">
+        <i class="fas fa-camera"></i>
+        <span>Mobile Check Deposit</span>
+      </div>
+      <div class="deposit-option" id="cashDeposit">
+        <i class="fas fa-money-bill-wave"></i>
+        <span>Cash Deposit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div id="navHome"><i class="fas fa-home"></i>Home</div>
+    <div id="navDeposit" class="active"><i class="fas fa-download"></i>Deposit</div>
+    <div id="navPay"><i class="fas fa-upload"></i>Pay</div>
+    <div id="navSettings"><i class="fas fa-cog"></i>Settings</div>
+  </div>
+
+  <!-- Toastify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Auth Script -->
+  <script src="auth.js"></script>
+  <!-- Loader Script -->
+  <script src="loader.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Protect the route
+      protectRoute();
+
+      // Placeholder for deposit options
+      const showComingSoon = (id, feature) => {
+        document.getElementById(id).addEventListener('click', () => {
+          loader(`${feature} functionality coming soon...`, 'default');
+          Toastify({
+            text: `${feature} functionality coming soon.`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'center',
+            style: {
+              background: '#39cd33de'
+            }
+          }).showToast();
+        });
+      };
+
+      goTo('directDeposit', 'direct-deposit');
+      showComingSoon('mobileCheck', 'Mobile Check Deposit');
+      showComingSoon('cashDeposit', 'Cash Deposit');     
+
+      // Bottom navigation
+      goTo('navHome', 'dashboard', 'default');
+      goTo('navDeposit', 'deposit', 'default');
+      goTo('navPay', 'pay', 'default');
+      goTo('navSettings', 'security_settings', 'default');
+    });
+  </script>
+</body>
+</html>

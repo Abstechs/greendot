@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Security Settings - Green Dot Bank</title>
+
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Toastify CSS for notifications -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+
+  <style>
+    :root {
+      --green-bg: #39cd33de;       /* Bright green */
+      --bg-white: #fff;            /* Light background */
+      --text-light: #fff;          /* White text */
+      --text-dark: #333;           /* Dark text */
+      --btn-bg: #66dd66;           /* Slightly lighter green for buttons */
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+
+    /* Header */
+    .header {
+      background-color: #fff;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      color: var(--text-light);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header .icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+    }
+    .header #notif {
+      color: var(--green-bg);
+    }
+    .header .icon sup {
+      background: var(--green-bg);
+      color: var(--text-light);
+      border-radius: 50%;
+      padding: 2px 5px;
+      font-size: 0.6rem;
+      vertical-align: top;
+      margin-left: 2px;
+    }
+
+    /* Menu */
+    .menu {
+      background-color: #fff;
+      margin: 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      flex: 1;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 1rem;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+    
+    .menu-item .left {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+     }
+    .menu-item .left i {
+      margin-right: 15px;
+      color: var(--green-bg);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: -1px 3px 2px #ddd;
+      border-radius: 50%;
+      font-size: 1.2rem;
+     }
+    .menu-item .left div {
+      display: flex;
+      flex-direction: column;
+     }
+    
+    .menu-item .title {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    .menu-item .subtitle {
+      font-size: 0.8rem;
+      color: #777;
+    }
+    
+    .menu-item .arrow {
+      font-size: 1rem;
+      color: #aaa;
+    }
+
+    /* Log Out Button */
+    .logout-btn {
+      background-color: var(--green-bg);
+      color: var(--text-light);
+      border: none;
+      padding: 12px 0;
+      width: 90%;
+      margin: 20px auto;
+      display: block;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .bottom-nav div {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #777;
+      cursor: pointer;
+    }
+    .bottom-nav div.active {
+      color: var(--green-bg);
+    }
+    .bottom-nav i {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1><img id="gdotLogo" width="85" src="./GDOT_BIG.png" alt="GREEN DOT"></h1>
+    <div class="icon">
+      <i id="notif" class="fas fa-comment-dots"></i><sup>50</sup>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu">
+    <div class="menu-item" id="autoLogout">
+      <div class="left">
+        <i class="fas fa-clock"></i>
+        <div>
+          <div class="title">Auto-Logout</div>
+          <div class="subtitle">Set session timeout duration</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="trustedDevices">
+      <div class="left">
+        <i class="fas fa-shield-alt"></i>
+        <div>
+          <div class="title">Trusted Devices</div>
+          <div class="subtitle">Manage devices with access</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="changePassword">
+      <div class="left">
+        <i class="fas fa-key"></i>
+        <div>
+          <div class="title">Change Password</div>
+          <div class="subtitle">Update your account password</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="twoFactor">
+      <div class="left">
+        <i class="fas fa-lock"></i>
+        <div>
+          <div class="title">Two-Factor Authentication</div>
+          <div class="subtitle">Enable 2FA for added security</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+  </div>
+
+  <!-- Log Out Button -->
+  <div style="text-align: center;">
+    <button class="logout-btn" id="logoutBtn">Log Out</button>
+  </div>
+  <br>
+  <p></p>
+  <br>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div id="navHome"><i class="fas fa-home"></i>Home</div>
+    <div id="navDeposit"><i class="fas fa-download"></i>Deposit</div>
+    <div id="navPay"><i class="fas fa-upload"></i>Pay</div>
+    <div class="active" id="navSettings"><i class="fas fa-cog"></i>Settings</div>
+  </div>
+
+  <!-- Toastify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Auth Script -->
+  <script src="auth.js"></script>
+  <!-- Loader Script -->
+  <script src="loader.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Protect the route
+      protectRoute();
+
+      // Navigation for menu items
+      const showComingSoon = (id, feature) => {
+        document.getElementById(id).addEventListener('click', () => {
+          loader(`${feature} functionality coming soon...`, 'default');
+          Toastify({
+            text: `${feature} functionality coming soon.`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'center',
+            style: {
+              background: '#39cd33de'
+            }
+          }).showToast();
+        });
+      };
+
+      showComingSoon('autoLogout', 'Auto-Logout');
+      showComingSoon('trustedDevices', 'Trusted Devices');
+      showComingSoon('changePassword', 'Change Password');
+      showComingSoon('twoFactor', 'Two-Factor Authentication');
+
+      // Bottom navigation
+      goTo('navHome', 'dashboard', 'default');
+      goTo('navDeposit', 'deposit', 'default');
+      goTo('navPay', 'pay', 'default');
+      goTo('navSettings', 'security_settings', 'default');
+
+      // Log Out
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        loader('Logging out...', './login.html');
+        logout(() => {
+          setTimeout(() => {
+            Toastify({
+              text: 'You have been logged out.',
+              duration: 3000,
+              gravity: 'top',
+              position: 'center',
+              style: {
+                background: '#39cd33de'
+              }
+            }).showToast();
+            window.location.href = './login.html';
+          }, 1000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Get Help</title>
+  <!-- Font Awesome from font.css (assumed to contain Font Awesome) -->
+  <link rel="stylesheet" href="./fonts.css"/>
+  <!-- Toastify CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+    .top-back {
+      position: absolute;
+      left: 16px;
+      color: #39cd33de; /* Green back arrow */
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .top-title {
+      font-weight: 600;
+      font-size: 17px;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0;
+    }
+
+    /* Option items */
+    .option-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+    }
+    .option-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .option-icon {
+      font-size: 20px;
+      color: #39cd33de; /* Green icons */
+    }
+    .option-text {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .option-right {
+      color: #ccc;
+      font-size: 20px;
+    }
+
+    /* Specific icon styling for "Chat with Us" */
+    .chat-icon-wrapper, .contact-us-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      /*border: 1px solid #39cd33de;*/
+      font-size:14px;
+      padding: 15px;
+      box-shadow: 0px 0px 5px #777;
+    }
+    .chat-icon-wrapper .option-icon {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-back" id="backBtn">
+      <i class="fas fa-arrow-left"></i>
+    </div>
+    <div class="top-title">Get Help</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <!-- Chat with Us -->
+    <div class="option-item" id="chatBtn">
+      <div class="option-left">
+        <div class="chat-icon-wrapper">
+          <i class="fa-solid fa-comments option-icon"></i>
+        </div>
+        <span class="option-text">Chat with Us</span>
+      </div>
+      <div class="option-right">
+        <i style="font-size:14px;" class="fas fa-chevron-right"></i>
+      </div>
+    </div>
+
+    <!-- Contact Us -->
+    <div class="option-item" id="contactBtn">
+      <div class="option-left">
+          <div class="contact-us-wrapper">
+        <i class="fas fa-building option-icon"></i>
+          </div>
+        <span class="option-text">Contact Us</span>
+      </div>
+      <div class="option-right">
+        <i style="font-size:14px;" class="fas fa-chevron-right"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toastify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Loader Script -->
+  <script src="loader.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Back navigation
+      function goTo(id, url) {
+        const t = document.getElementById(id);
+        t.addEventListener('click', () => {
+          window.location.href = `./${url}.html`;
+        });
+      }
+      goTo('backBtn', 'dashboard');
+
+      // Chat with Us
+      document.getElementById('chatBtn').addEventListener('click', () => {
+        Toastify({
+          text: 'Opening chat support...',
+          duration: 3000,
+          gravity: 'top',
+          position: 'center'
+        }).showToast();
+        // Replace with actual chat functionality
+      });
+
+      // Contact Us
+      document.getElementById('contactBtn').addEventListener('click', () => {
+        Toastify({
+          text: 'Opening contact form...',
+          duration: 3000,
+          gravity: 'top',
+          position: 'center'
+        }).showToast();
+        // Replace with actual contact form or page navigation
+      });
+    });
+  </script>
+</body>
+</html>

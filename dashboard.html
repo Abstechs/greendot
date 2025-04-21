@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Green Dot Bank</title>
+
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Toastify CSS for notifications -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+
+  <style>
+    :root {
+      --green-bg: #39cd33de;       /* Bright green */
+      --bg-white: #fff;            /* Light background */
+      --text-light: #fff;          /* White text */
+      --text-dark: #333;           /* Dark text */
+      --btn-bg: #66dd66;           /* Slightly lighter green for buttons */
+      --radial-grad: radial-gradient(circle at center, #39cd33de, #e6f5e6);
+      --conic-grad: conic-gradient(#39cd33de, #e6f5e6);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: var(--bg-white);
+    }
+
+    /* Header */
+    .header {
+      background-color: #fff;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      color: var(--text-light);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header h1 span {
+      font-weight: 300;
+    }
+    .header .icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+    }
+    .header #notif {
+      color: var(--green-bg);
+    }
+    .notif {
+      background-color: var(--green-bg);
+    }
+    .header .icon sup {
+      background: var(--green-bg);
+      color: var(--text-light);
+      border-radius: 50%;
+      padding: 2px 5px;
+      font-size: 0.6rem;
+      vertical-align: top;
+      margin-left: 2px;
+    }
+
+    /* Balance Section */
+    .balance-section {
+      background-color: var(--green-bg);
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--text-light);
+    }
+    .balance-section p {
+      margin: 0;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+    .balance-section h2 {
+      margin: 10px 0 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    /* Vault Section */
+    .vault-section {
+      background-color: var(--green-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      padding-right: 20px;
+      padding-left: 20px;
+      padding-bottom: 10px;
+    }
+    .vault-btn {
+      background-color: var(--btn-bg);
+      border: 2px solid #2bff5866;
+      border-radius: 20px;
+      padding: 10px 16px;
+      color: var(--text-light);
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .vault {
+      width: 80px;
+      height: 80px;
+      background-color: #fff;
+      border: 1.7px solid var(--green-bg);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--green-bg);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2), 1px 0px 0 #fff,-1px 0px 0 #fff, 0px 1px 0 #fff, 0px -1px 0 #fff;
+    }
+    .vault i {
+      margin-top: 4px;
+      font-size: 1rem;
+      color: var(--green-bg);
+    }
+    .vault-amt {
+      color: #000000;
+      font-weight: lighter;
+    }
+    .vault > span > small {
+      font-size: 8px;
+    }
+
+    /* Menu */
+    .menu {
+      background-color: #fff;
+      margin: 0px 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 1rem;
+      color: var(--text-dark);
+    }
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+    .menu-item span {
+      display: flex;
+      align-items: center;
+    }
+    .menu-item i {
+      margin-right: 15px;
+      color: var(--green-bg);
+      width: 20px;
+      text-align: center;    
+    }
+    .menu-item span i {
+      box-shadow: -1px 3px 2px #ddd;
+      border-radius: 50%; 
+      padding: 6px 4px;       
+    }
+    .menu-item .arrow {
+      font-size: 1rem;
+      color: #aaa;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .bottom-nav div {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #777;
+      cursor: pointer;
+    }
+    .bottom-nav div.active {
+      color: var(--green-bg);
+    }
+    .bottom-nav i {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1><img id="gdotLogo" width="85" src="./GDOT_BIG.png" alt="GREEN DOT"></h1>
+    <div class="icon">
+      <i id="notif" class="fas fa-comment-dots"></i><sup class="notif">50</sup>
+    </div>
+  </div>
+
+  <!-- Balance Section -->
+  <div class="balance-section">
+    <p>ACCOUNT BALANCE (CARD ENDING IN 6663)</p>
+    <h2>$278,000.00</h2>
+  </div>
+
+  <!-- Vault Section -->
+  <div class="vault-section">
+    <button class="vault-btn">STASH</button>
+    <div class="vault">
+      <span><small>VAULT</small></span>
+      <span class="vault-amt">$0.00</span>
+      <i class="fas fa-lock"></i>
+    </div>
+    <button class="vault-btn">UNSTASH</button>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu">
+    <div class="menu-item" id="card-unlock">
+      <span><i class="fas fa-lock"></i>Card Unlocked</span>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="edd">
+      <span><i class="fas fa-bolt"></i>Early Direct Deposit</span>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="trnx">
+      <span><i class="fas fa-list"></i>Transactions</span>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="atmCD">
+      <span><i class="fas fa-map-marker-alt"></i>ATM & Cash Deposit Map</span>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="getHelp">
+      <span><i class="fas fa-question-circle"></i>Get Help</span>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div id="navHome" class="active"><i class="fas fa-home"></i>Home</div>
+    <div id="navDeposit"><i class="fas fa-download"></i>Deposit</div>
+    <div id="navPay"><i class="fas fa-upload"></i>Pay</div>
+    <div id="navSettings"><i class="fas fa-cog"></i>Settings</div>
+  </div>
+
+  <!-- Toastify JS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Auth Script -->
+  <script src="auth.js"></script>
+  <!-- Loader Script -->
+  <script src="loader.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Protect the route
+      protectRoute();
+
+      // Navigation for menu items
+      goTo('card-unlock', 'lock-unlock');
+      goTo('edd', 'direct-deposit');
+      goTo('trnx', 'transactions');
+      goTo('atmCD', 'atm_cash_deposit');
+      goTo('getHelp', 'get_help');
+
+      // Bottom navigation
+      goTo('navHome', 'dashboard');
+      goTo('navDeposit', 'deposit');
+      goTo('navPay', 'pay');
+      goTo('navSettings', 'settings');
+    });
+  </script>
+</body>
+</html>
