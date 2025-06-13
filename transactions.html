@@ -1,25 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0"/>
   <title>Transactions</title>
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="fonts.css">
-  <!--  
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
-   -->
   <style>
-      
-      :root {
-      --green-bg: #39cd33de;       /* Bright green */
-      --bg-white: #fff; #e6f5e6;      /* Light background */
-      --text-light: #fff;         /* White text */
-      --text-dark: #333;          /* Dark text */
-      --btn-bg: #66dd66;          /* Slightly lighter green for buttons */
+    :root {
+      --green-bg: #39cd33de;
+      --bg-white: #fff;
+      --text-light: #fff;
+      --text-dark: #333;
+      --btn-bg: #66dd66;
       --radial-grad: radial-gradient(circle at center, #39cd33de, #e6f5e6);
       --conic-grad: conic-gradient(#39cd33de, #e6f5e6);
     }
@@ -28,7 +21,6 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       background-color: #f8f8f8;
@@ -37,41 +29,32 @@
       display: flex;
       flex-direction: column;
     }
-
-    /* Top header bar */
     .header {
       display: flex;
       align-items: center;
-      justify-content: space-between; /* "Transactions" on left, "More..." on right */
+      justify-content: space-between;
       background-color: #f8f8f8;
       padding: 14px 16px;
       border-bottom: 1px solid #ddd;
-      /* If you want it fixed at top:
-      position: fixed;
-      width: 100%;
-      z-index: 1000;
-      */
     }
     .header-title {
       font-size: 18px;
       font-weight: 500;
     }
-    .left{
-        color: var(--green-bg);
+    .left {
+      color: var(--green-bg);
     }
     .ellipsis {
       font-size: 16px;
       color: #6cc24a;
       cursor: pointer;
     }
-    .header-more{
-        text-align: center;
-        padding-top: 8px;
-        color: #999;
-        font-size: 12px;
+    .header-more {
+      text-align: center;
+      padding-top: 8px;
+      color: #999;
+      font-size: 12px;
     }
-
-    /* Main area for "No transactions yet" */
     .main-content {
       flex: 1;
       display: flex;
@@ -80,81 +63,119 @@
       align-items: center;
       text-align: center;
       padding: 20px;
-      /* If header is fixed, add top padding:
-      margin-top: 60px;
-      */
     }
-
-    /* Icon in the center */
     .empty-icon {
       font-size: 80px;
       color: #ccc;
       margin-bottom: 20px;
       transform: rotate(-45deg);
     }
-
-    /* "No transactions yet" text */
-    .no-transactions {
-      font-size: 17px;
-      color: #666;
-      margin-bottom: 8px;
-    }
-
-    /* "Tap the deposit tab..." text */
     .hint-text {
       font-size: 13px;
       color: #999;
     }
-    .trnxDetails{
-        padding:4px 6px;
-        background-color: #eee;
-        border-radius: 5px;
-        margin: 2px;
+    .spinner {
+      text-align: center;
+      margin: 20px 0;
     }
-    .trnxDetails i{
-        padding-left:12px;
+    .spinner i {
+      font-size: 40px;
+      color: var(--green-bg);
+    }
+    .transaction-list {
+      width: 100%;
+    }
+    .transaction {
+      display: flex;
+      align-items: flex-start;
+      padding: 10px;
+      border-left: 4px solid var(--green-bg);
+      background-color: #fff;
+      margin-bottom: 0px; 5px;
+      border-radius: 0px;
+    }
+    .transaction:hover {
+      background-color: #e6f5e6;
+    }
+    .transaction i {
+      font-size: 24px;
+      color: #6cc24a;
+      margin-right: 10px;
+    }
+    .transaction .details {
+      flex: 1;
+      text-align: left;
+    }
+    .transaction .description {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.4;
+    }
+    .transaction .date {
+      font-size: 12px;
+      color: #999;
+      margin-top: 5px;
+    }
+    .main-content.has-transactions {
+      justify-content: flex-start;
+      padding: 10px;
+    }
+    .trnxDetails {
+      padding: 4px 6px;
+      background-color: #eee;
+      border-radius: 5px;
+      margin: 2px;
+    }
+    .trnxDetails i {
+      padding-left: 12px;
+    }
+    .trnx_h{
+        font-weight: bolder;
+    }
+    .transaction-list .trnx-date{
+        background-color: #ddd;
+        padding:10px 0;
+        color:#8b8b8b;#686868;
+        font-weight: 500;
     }
   </style>
 </head>
 <body>
-
-  <!-- Header -->
   <div class="header">
     <div id="back"><i class="fas fa-arrow-left left"></i></div>
     <div class="header-title">Transactions</div>
     <div class="ellipsis"><i class="fas fa-ellipsis-h"></i></div>
   </div>
+  
   <div class="header-more" id="more">More...</div>
   
 
-  <!-- Main content -->
   <div class="main-content">
-    <i class="fas fa-credit-card empty-icon"></i>
-    <div class="no-transactions">No transactions yet.</div>
-    <div class="hint-text">
-      Tap the deposit tab to move some money onto your Green Dot card.
+      
+    <div class="loading">
+      <i class="fas fa-credit-card empty-icon"></i>
+      <div class="spinner"><i class="fa-duotone fa-solid fa-loader fa-spin"></i></div>
+      <div class="hint-text">Loading transactions...</div>
     </div>
-  </div>
-  
-  
-  <!-- More Options Popup -->
-<div id="moreOptions" style="display:none; position:fixed; bottom:0; left:0; width:100%; background:#fff; box-shadow:0 -2px 10px rgba(0,0,0,0.1); border-top-left-radius:12px; border-top-right-radius:12px; padding:15px;">
     
-  <div style="display:flex;align-items:center;justify-content: space-between;font-weight:bold; margin-bottom:10px;">
+  </div>
+
+  <div id="moreOptions" style="display:none; position:fixed; bottom:0; left:0; width:100%; background:#fff; box-shadow:0 -2px 10px rgba(0,0,0,0.1); border-top-left-radius:12px; border-top-right-radius:12px; padding:15px;">
+    <div style="display:flex;align-items:center;justify-content: space-between;font-weight:bold; margin-bottom:10px;">
       <span style="color:#000;">More</span>
       <span><i style="background:#eee; color:#39cd33de;padding:3px 5px;border-radius:50%;align-self: center;" class="fas fa-times" id="times"></i></span>
+    </div>
+    <div style="border-top:1px solid #eee;">
+      <a href="#" style="display:flex; align-items:center; padding:10px 0; text-decoration:none; color:#333;" class="trnxDetails">
+        <i class="fas fa-file-alt" style="color:#6cc24a; margin-right:10px;"></i> Bank Statements
+      </a>
+      <a href="#" style="display:flex; align-items:center; padding:10px 0; text-decoration:none; color:#333;" class="trnxDetails">
+        <i class="fas fa-dollar-sign" style="color:#6cc24a; margin-right:10px;"></i> Fees Paid
+      </a>
+    </div>
   </div>
-  
-  <div style="border-top:1px solid #eee;">
-    <a href="#" style="display:flex; align-items:center; padding:10px 0; text-decoration:none; color:#333;" class="trnxDetails">
-      <i class="fas fa-file-alt" style="color:#6cc24a; margin-right:10px;"></i> Bank Statements
-    </a>
-    <a href="#" style="display:flex; align-items:center; padding:10px 0; text-decoration:none; color:#333;" class="trnxDetails">
-      <i class="fas fa-dollar-sign" style="color:#6cc24a; margin-right:10px;"></i> Fees Paid
-    </a>
-  </div>
-</div>
-<script>
+
+  <script>
     function goTo(id, url) {
       const t = document.getElementById(id);
       t.addEventListener('click', () => { 
@@ -163,31 +184,113 @@
     }
     goTo('back', 'dashboard');
 
-  // Toggle more options
-  const ellipsis = document.querySelector('.ellipsis');
-  
-  const times = document.querySelector('#times');
-  const moreOptions = document.getElementById('moreOptions');
+    const ellipsis = document.querySelector('.ellipsis');
+    const times = document.querySelector('#times');
+    const moreOptions = document.getElementById('moreOptions');
 
-  ellipsis.addEventListener('click', () => {
-    moreOptions.style.display = (moreOptions.style.display === 'none' || moreOptions.style.display === '') 
-      ? 'block' 
-      : 'none';
-  });
-  
-  times.addEventListener('click', () => {
-    moreOptions.style.display = (moreOptions.style.display === 'none' || moreOptions.style.display === '') 
-      ? 'block' 
-      : 'none';
-  });
-  // Optional: Hide the panel if clicked outside
-  window.addEventListener('click', function(e){
-    if (!ellipsis.contains(e.target) && !moreOptions.contains(e.target)) {
-      moreOptions.style.display = 'none';
-    }
-  });
-  
-let more = document.getElementById('more');
+    ellipsis.addEventListener('click', () => {
+      moreOptions.style.display = (moreOptions.style.display === 'none' || moreOptions.style.display === '') 
+        ? 'block' 
+        : 'none';
+    });
+    times.addEventListener('click', () => {
+      moreOptions.style.display = (moreOptions.style.display === 'none' || moreOptions.style.display === '') 
+        ? 'block' 
+        : 'none';
+    });
+    window.addEventListener('click', function(e){
+      if (!ellipsis.contains(e.target) && !moreOptions.contains(e.target)) {
+        moreOptions.style.display = 'none';
+      }
+    });
+
+    setTimeout(() => {
+      const transactionList = `
+        <div class="transaction-list">
+            
+          <div class="trnx-date">FRIDAY, AUGUST 12, 2022 07:40 PM</div>
+            
+          <div class="transaction">
+            <i class="fas fa-info-circle"></i>
+            <div class="details">
+              <div class="description"><span class="trnx_h">Purchase Notification</span><br>You spent $1990.00 at APPLE STORE #R346 in DEDHAM, MA.</div>
+              <!--
+              <div class="date">Friday, August 12, 2022 07:40 PM</div>
+               -->
+            </div>
+          </div>
+          
+          <div class="trnx-date">FRIDAY, AUGUST 12, 2022 07:25 PM</div>
+          
+          <div class="transaction">
+            <i class="fas fa-shield-alt"></i>
+            <div class="details">
+              <div class="description"><span class="trnx_h">PIN Change</span><br>You've successfully updated the PIN associated with your account. If you didn't make this change please contact Customer Support immediately.</div>
+              <!--  
+              <div class="date">Friday, August 12, 2022 07:25 PM</div>
+               -->
+            </div>
+          </div>
+          
+          <div class="trnx-date">FRIDAY, AUGUST 12, 2022 06:48 PM</div>
+          
+          <div class="transaction">
+            <i class="fas fa-dollar-sign"></i>
+            <div class="details">
+              <div class="description"><span class="trnx_h">Account Balance</span><br>Your balance is $20537.09.</div>
+              <!--  
+              <div class="date">Friday, August 12, 2022 06:48 AM</div>
+               -->
+            </div>
+          </div>
+          
+          <div class="trnx-date">FRIDAY, AUGUST 12, 2022 06:11 PM</div>
+          
+          <div class="transaction">
+            <i class="fas fa-info-circle"></i>
+            <div class="details">
+              <div class="description"><span class="trnx_h">Card Now Available</span><br>The block was removed and your card to be used.</div>
+              <!--
+              <div class="date">Friday, August 12, 2022 07:40 PM</div>
+               -->
+            </div>
+          </div>
+          
+          <div class="trnx-date">MONDAY, AUGUST 8, 2022 06:48 PM</div>
+          
+          <div class="transaction">
+            <i class="fas fa-dollar-sign"></i>
+            <div class="details">
+              <div class="description"><span class="trnx_h">Account Balance</span><br>Your balance is $22537.09.</div>
+              <!--  
+              <div class="date">Friday, August 12, 2022 06:48 AM</div>
+               -->
+            </div>
+          </div>
+          
+          <div class="trnx-date">FRIDAY, AUGUST 8, 2022 06:02 PM</div>
+          
+          
+          <div class="transaction">
+            <i class="fas fa-bolt"></i>
+            <div class="details">
+              <div class="description"><span class="trnx_h">Direct Deposit</span><br>Your direct deposit of $22536.05 from Tax Refund Proc is now available in your account.</div>
+              <!--  
+              <div class="date">Friday, August 12, 2022 06:48 AM</div>
+               -->
+            </div>
+          </div>
+          
+          <div class="trnx-date">MONDAY, AUGUST 1, 2022 11:01 AM</div>
+          
+        </div>
+      `;
+      const mainContent = document.querySelector('.main-content');
+      mainContent.innerHTML = transactionList;
+      mainContent.classList.add('has-transactions');
+    }, 3000);
+   
+    let more = document.getElementById('more');
 
   setTimeout(loader,3000);
   
@@ -198,9 +301,6 @@ function loader(){
 function stop(){
     more.style.display = "none";
 }
-
-  
-</script>
-
+  </script>
 </body>
 </html>

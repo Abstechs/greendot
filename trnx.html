@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0"/>
+  <title>Transactions</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="fonts.css">
+  <!--  
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+   -->
+  <style>
+      
+      :root {
+      --green-bg: #39cd33de;       /* Bright green */
+      --bg-white: #fff; #e6f5e6;      /* Light background */
+      --text-light: #fff;         /* White text */
+      --text-dark: #333;          /* Dark text */
+      --btn-bg: #66dd66;          /* Slightly lighter green for buttons */
+      --radial-grad: radial-gradient(circle at center, #39cd33de, #e6f5e6);
+      --conic-grad: conic-gradient(#39cd33de, #e6f5e6);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top header bar */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* "Transactions" on left, "More..." on right */
+      background-color: #f8f8f8;
+      padding: 14px 16px;
+      border-bottom: 1px solid #ddd;
+      /* If you want it fixed at top:
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      */
+    }
+    .header-title {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .left{
+        color: var(--green-bg);
+    }
+    .ellipsis {
+      font-size: 16px;
+      color: #6cc24a;
+      cursor: pointer;
+    }
+    .header-more{
+        text-align: center;
+        padding-top: 8px;
+        color: #999;
+        font-size: 12px;
+    }
+
+    /* Main area for "No transactions yet" */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      /* If header is fixed, add top padding:
+      margin-top: 60px;
+      */
+    }
+
+    /* Icon in the center */
+    .empty-icon {
+      font-size: 80px;
+      color: #ccc;
+      margin-bottom: 20px;
+      transform: rotate(-45deg);
+    }
+
+    /* "No transactions yet" text */
+    .no-transactions {
+      font-size: 17px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    /* "Tap the deposit tab..." text */
+    .hint-text {
+      font-size: 13px;
+      color: #999;
+    }
+    .trnxDetails{
+        padding:4px 6px;
+        background-color: #eee;
+        border-radius: 5px;
+        margin: 2px;
+    }
+    .trnxDetails i{
+        padding-left:12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div id="back"><i class="fas fa-arrow-left left"></i></div>
+    <div class="header-title">Transactions</div>
+    <div class="ellipsis"><i class="fas fa-ellipsis-h"></i></div>
+  </div>
+  <div class="header-more" id="more">More...</div>
+  
+
+  <!-- Main content -->
+  <div class="main-content">
+    <i class="fas fa-credit-card empty-icon"></i>
+    <div class="no-transactions">No transactions yet.</div>
+    <div class="hint-text">
+      Tap the deposit tab to move some money onto your Green Dot card.
+    </div>
+  </div>
+  
+  
+  <!-- More Options Popup -->
+<div id="moreOptions" style="display:none; position:fixed; bottom:0; left:0; width:100%; background:#fff; box-shadow:0 -2px 10px rgba(0,0,0,0.1); border-top-left-radius:12px; border-top-right-radius:12px; padding:15px;">
+    
+  <div style="display:flex;align-items:center;justify-content: space-between;font-weight:bold; margin-bottom:10px;">
+      <span style="color:#000;">More</span>
+      <span><i style="background:#eee; color:#39cd33de;padding:3px 5px;border-radius:50%;align-self: center;" class="fas fa-times" id="times"></i></span>
+  </div>
+  
+  <div style="border-top:1px solid #eee;">
+    <a href="#" style="display:flex; align-items:center; padding:10px 0; text-decoration:none; color:#333;" class="trnxDetails">
+      <i class="fas fa-file-alt" style="color:#6cc24a; margin-right:10px;"></i> Bank Statements
+    </a>
+    <a href="#" style="display:flex; align-items:center; padding:10px 0; text-decoration:none; color:#333;" class="trnxDetails">
+      <i class="fas fa-dollar-sign" style="color:#6cc24a; margin-right:10px;"></i> Fees Paid
+    </a>
+  </div>
+</div>
+<script>
+    function goTo(id, url) {
+      const t = document.getElementById(id);
+      t.addEventListener('click', () => { 
+        window.location.href = `./${url}.html`; 
+      });
+    }
+    goTo('back', 'dashboard');
+
+  // Toggle more options
+  const ellipsis = document.querySelector('.ellipsis');
+  
+  const times = document.querySelector('#times');
+  const moreOptions = document.getElementById('moreOptions');
+
+  ellipsis.addEventListener('click', () => {
+    moreOptions.style.display = (moreOptions.style.display === 'none' || moreOptions.style.display === '') 
+      ? 'block' 
+      : 'none';
+  });
+  
+  times.addEventListener('click', () => {
+    moreOptions.style.display = (moreOptions.style.display === 'none' || moreOptions.style.display === '') 
+      ? 'block' 
+      : 'none';
+  });
+  // Optional: Hide the panel if clicked outside
+  window.addEventListener('click', function(e){
+    if (!ellipsis.contains(e.target) && !moreOptions.contains(e.target)) {
+      moreOptions.style.display = 'none';
+    }
+  });
+  
+let more = document.getElementById('more');
+
+  setTimeout(loader,3000);
+  
+function loader(){
+    more.innerHTML = "<i class='fa-duotone fa-solid fa-loader fa-spin'></i>";
+    setTimeout(stop, 3000);
+}
+function stop(){
+    more.style.display = "none";
+}
+
+  
+</script>
+
+</body>
+</html>
