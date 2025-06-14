@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,20 +69,27 @@
       margin-bottom: 20px;
       transform: rotate(-45deg);
     }
+    .no-transactions {
+      font-size: 17px;
+      color: #666;
+      margin-bottom: 8px;
+    }
     .hint-text {
       font-size: 13px;
       color: #999;
     }
-    .spinner {
-      text-align: center;
-      margin: 20px 0;
+    .trnxDetails {
+      padding: 4px 6px;
+      background-color: #eee;
+      border-radius: 5px;
+      margin: 2px;
     }
-    .spinner i {
-      font-size: 40px;
-      color: var(--green-bg);
+    .trnxDetails i {
+      padding-left: 12px;
     }
+    /* Added styles from second interface for transaction list */
     .transaction-list {
-      width: 100%;
+      width: 100%;      
     }
     .transaction {
       display: flex;
@@ -91,7 +97,7 @@
       padding: 10px;
       border-left: 4px solid var(--green-bg);
       background-color: #fff;
-      margin-bottom: 0px; 5px;
+      margin-bottom: 0px;
       border-radius: 0px;
     }
     .transaction:hover {
@@ -118,25 +124,17 @@
     }
     .main-content.has-transactions {
       justify-content: flex-start;
-      padding: 10px;
+      padding: 0px;
     }
-    .trnxDetails {
-      padding: 4px 6px;
-      background-color: #eee;
-      border-radius: 5px;
-      margin: 2px;
+    .trnx_h {
+      font-weight: bolder;
     }
-    .trnxDetails i {
-      padding-left: 12px;
-    }
-    .trnx_h{
-        font-weight: bolder;
-    }
-    .transaction-list .trnx-date{
-        background-color: #ddd;
-        padding:10px 0;
-        color:#8b8b8b;#686868;
-        font-weight: 500;
+    .transaction-list .trnx-date {
+      background-color: #ddd;
+      padding: 10px 0 10px 14px;
+      color: #686868;
+      font-weight: 500;
+      text-align: left;
     }
   </style>
 </head>
@@ -146,20 +144,16 @@
     <div class="header-title">Transactions</div>
     <div class="ellipsis"><i class="fas fa-ellipsis-h"></i></div>
   </div>
-  
   <div class="header-more" id="more">More...</div>
   
-
   <div class="main-content">
-      
-    <div class="loading">
-      <i class="fas fa-credit-card empty-icon"></i>
-      <div class="spinner"><i class="fa-duotone fa-solid fa-loader fa-spin"></i></div>
-      <div class="hint-text">Loading transactions...</div>
+    <i class="fas fa-credit-card empty-icon"></i>
+    <div class="no-transactions">No transactions yet.</div>
+    <div class="hint-text">
+      Tap the deposit tab to move some money onto your Green Dot card.
     </div>
-    
   </div>
-
+  
   <div id="moreOptions" style="display:none; position:fixed; bottom:0; left:0; width:100%; background:#fff; box-shadow:0 -2px 10px rgba(0,0,0,0.1); border-top-left-radius:12px; border-top-right-radius:12px; padding:15px;">
     <div style="display:flex;align-items:center;justify-content: space-between;font-weight:bold; margin-bottom:10px;">
       <span style="color:#000;">More</span>
@@ -194,113 +188,77 @@
         : 'none';
     });
     times.addEventListener('click', () => {
-      moreOptions.style.display = (moreOptions.style.display === 'none' || moreOptions.style.display === '') 
-        ? 'block' 
-        : 'none';
+      moreOptions.style.display = 'none';
     });
-    window.addEventListener('click', function(e){
+    window.addEventListener('click', function(e) {
       if (!ellipsis.contains(e.target) && !moreOptions.contains(e.target)) {
         moreOptions.style.display = 'none';
       }
     });
 
-    setTimeout(() => {
+    let more = document.getElementById('more');
+    let mainContent = document.querySelector('.main-content');
+
+    setTimeout(loader, 3000);
+  
+    function loader() {
+      more.innerHTML = "<i class='fa-duotone fa-solid fa-loader fa-spin'></i>";
+      setTimeout(replaceContent, 3000);
+    }
+
+    function replaceContent() {
+      more.style.display = "none";
+      // Transaction list from second interface
       const transactionList = `
         <div class="transaction-list">
-            
           <div class="trnx-date">FRIDAY, AUGUST 12, 2022 07:40 PM</div>
-            
           <div class="transaction">
             <i class="fas fa-info-circle"></i>
             <div class="details">
               <div class="description"><span class="trnx_h">Purchase Notification</span><br>You spent $1990.00 at APPLE STORE #R346 in DEDHAM, MA.</div>
-              <!--
-              <div class="date">Friday, August 12, 2022 07:40 PM</div>
-               -->
             </div>
           </div>
-          
           <div class="trnx-date">FRIDAY, AUGUST 12, 2022 07:25 PM</div>
-          
           <div class="transaction">
             <i class="fas fa-shield-alt"></i>
             <div class="details">
               <div class="description"><span class="trnx_h">PIN Change</span><br>You've successfully updated the PIN associated with your account. If you didn't make this change please contact Customer Support immediately.</div>
-              <!--  
-              <div class="date">Friday, August 12, 2022 07:25 PM</div>
-               -->
             </div>
           </div>
-          
           <div class="trnx-date">FRIDAY, AUGUST 12, 2022 06:48 PM</div>
-          
           <div class="transaction">
             <i class="fas fa-dollar-sign"></i>
             <div class="details">
               <div class="description"><span class="trnx_h">Account Balance</span><br>Your balance is $20537.09.</div>
-              <!--  
-              <div class="date">Friday, August 12, 2022 06:48 AM</div>
-               -->
             </div>
           </div>
-          
           <div class="trnx-date">FRIDAY, AUGUST 12, 2022 06:11 PM</div>
-          
           <div class="transaction">
             <i class="fas fa-info-circle"></i>
             <div class="details">
               <div class="description"><span class="trnx_h">Card Now Available</span><br>The block was removed and your card to be used.</div>
-              <!--
-              <div class="date">Friday, August 12, 2022 07:40 PM</div>
-               -->
             </div>
           </div>
-          
           <div class="trnx-date">MONDAY, AUGUST 8, 2022 06:48 PM</div>
-          
           <div class="transaction">
             <i class="fas fa-dollar-sign"></i>
             <div class="details">
               <div class="description"><span class="trnx_h">Account Balance</span><br>Your balance is $22537.09.</div>
-              <!--  
-              <div class="date">Friday, August 12, 2022 06:48 AM</div>
-               -->
             </div>
           </div>
-          
           <div class="trnx-date">FRIDAY, AUGUST 8, 2022 06:02 PM</div>
-          
-          
           <div class="transaction">
             <i class="fas fa-bolt"></i>
             <div class="details">
               <div class="description"><span class="trnx_h">Direct Deposit</span><br>Your direct deposit of $22536.05 from Tax Refund Proc is now available in your account.</div>
-              <!--  
-              <div class="date">Friday, August 12, 2022 06:48 AM</div>
-               -->
             </div>
           </div>
-          
           <div class="trnx-date">MONDAY, AUGUST 1, 2022 11:01 AM</div>
-          
         </div>
       `;
-      const mainContent = document.querySelector('.main-content');
       mainContent.innerHTML = transactionList;
       mainContent.classList.add('has-transactions');
-    }, 3000);
-   
-    let more = document.getElementById('more');
-
-  setTimeout(loader,3000);
-  
-function loader(){
-    more.innerHTML = "<i class='fa-duotone fa-solid fa-loader fa-spin'></i>";
-    setTimeout(stop, 3000);
-}
-function stop(){
-    more.style.display = "none";
-}
+    }
   </script>
 </body>
 </html>
