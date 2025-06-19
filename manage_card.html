@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Card - Green Dot Bank</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+  <style>
+    :root {
+      --green-bg: #39cd33de;
+      --bg-white: #fff;
+      --text-light: #fff;
+      --text-dark: #333;
+      --btn-bg: #66dd66;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+    .header {
+      background-color: #fff;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      color: var(--text-light);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header .icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+    }
+    .header #notif {
+      color: var(--green-bg);
+    }
+    .header .icon sup {
+      background: var(--green-bg);
+      color: var(--text-light);
+      border-radius: 50%;
+      padding: 2px 5px;
+      font-size: 0.6rem;
+      vertical-align: top;
+      margin-left: 2px;
+    }
+    .menu {
+      background-color: #fff;
+      margin: 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      flex: 1;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 1rem;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+    .menu-item .left {
+      display: flex;
+      align-items: center;
+    }
+    .menu-item .left i {
+      margin-right: 15px;
+      color: var(--green-bg);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: -1px 3px 2px #ddd;
+      border-radius: 50%;
+      font-size: 1.2rem;
+    }
+    .menu-item .title {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    .menu-item .subtitle {
+      font-size: 0.8rem;
+      color: #777;
+    }
+    .menu-item .arrow {
+      font-size: 1rem;
+      color: #aaa;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .bottom-nav div {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #777;
+      cursor: pointer;
+    }
+    .bottom-nav div.active {
+      color: var(--green-bg);
+    }
+    .bottom-nav i {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1><img id="gdotLogo" width="85" src="./GDOT_BIG.png" alt="GREEN DOT"></h1>
+    <div class="icon">
+      <i id="notif" class="fas fa-comment-dots"></i><sup>50</sup>
+    </div>
+  </div>
+  <div class="menu">
+    <div class="menu-item" id="changePin">
+      <div class="left">
+        <i class="fas fa-key"></i>
+        <div>
+          <div class="title">Change ATM PIN</div>
+          <div class="subtitle">Update your card PIN</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="lockCard">
+      <div class="left">
+        <i class="fas fa-lock"></i>
+        <div>
+          <div class="title">Lock/Unlock Card</div>
+          <div class="subtitle">Temporarily lock or unlock your card</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="menu-item" id="reportIssue">
+      <div class="left">
+        <i class="fas fa-exclamation-circle"></i>
+        <div>
+          <div class="title">Report Problem</div>
+          <div class="subtitle">Report lost/stolen card or issues</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div id="navHome"><i class="fas fa-home"></i>Home</div>
+    <div id="navDeposit"><i class="fas fa-download"></i>Deposit</div>
+    <div id="navPay"><i class="fas fa-upload"></i>Pay</div>
+    <div id="navSettings" class="active"><i class="fas fa-cog"></i>Settings</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="auth.js"></script>
+  <script src="loader.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      protectRoute();
+      const showComingSoon = (id, feature) => {
+        document.getElementById(id).addEventListener('click', () => {
+          loader(`${feature} functionality coming soon...`);
+          Toastify({
+            text: `${feature} functionality coming soon.`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'center',
+            style: { background: '#39cd33de' }
+          }).showToast();
+        });
+      };
+      showComingSoon('changePin', 'Change ATM PIN');
+      showComingSoon('lockCard', 'Lock/Unlock Card');
+      showComingSoon('reportIssue', 'Report Problem');
+      goTo('navHome', 'dashboard');
+      goTo('navDeposit', 'deposit');
+      goTo('navPay', 'pay');
+      goTo('navSettings', 'settings');
+    });
+  </script>
+</body>
+</html>
