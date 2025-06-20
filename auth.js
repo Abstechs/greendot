@@ -1,8 +1,10 @@
 // auth.js
 (function () {
   // Hardcoded credentials (for demo purposes; in production, use a secure backend)
-  const VALID_USERNAME = 'Kristin';//'Precious3310';
-  const VALID_PASSWORD = 'Precious';//'Isabella1234';
+  const VALID_USERNAME = 'Kristin';
+  //'Precious3310';
+  const VALID_PASSWORD = 'Precious';
+  //'Isabella1234';
 
   // Utility to set a cookie
   function setCookie(name, value, days) {
