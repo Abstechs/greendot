@@ -14,6 +14,11 @@
       --text-dark: #333;
       --btn-bg: #66dd66;
     }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       background-color: #f5f5f5;
@@ -68,6 +73,9 @@
       font-size: 0.9rem;
       color: #777;
       margin-bottom: 5px;
+    }
+    input{
+        outline: none;
     }
     .form-group input {
       width: 100%;
@@ -154,23 +162,72 @@
   <script src="auth.js"></script>
   <script src="loader.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      protectRoute();
-      document.getElementById('saveBtn').addEventListener('click', () => {
-        loader('Saving changes...');
-        Toastify({
-          text: 'Personal info update coming soon.',
-          duration: 3000,
-          gravity: 'top',
-          position: 'center',
-          style: { background: '#39cd33de' }
-        }).showToast();
-      });
-      goTo('navHome', 'dashboard');
-      goTo('navDeposit', 'deposit');
-      goTo('navPay', 'pay');
-      goTo('navSettings', 'settings');
-    });
-  </script>
+document.addEventListener('DOMContentLoaded', () => {
+  protectRoute();
+
+  // Function to set a cookie
+  function setCookie(name, value, days) {
+    let expires = '';
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = name + '=' + (value || '') + expires + '; path=/';
+  }
+
+  // Function to get a cookie
+  function getCookie(name) {
+    const nameEQ = name + '=';
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
+  // Function to load form data from cookies
+  function loadFormData() {
+    const address = getCookie('address');
+    const mobile = getCookie('mobile');
+    if (address) {
+      document.querySelector('input[placeholder="123 Main St, City, State"]').value = address;
+    }
+    if (mobile) {
+      document.querySelector('input[placeholder="+1 (555) 123-4567"]').value = mobile;
+    }
+  }
+
+  // Load form data from cookies when the page loads
+  loadFormData();
+
+  // Save form data to cookies when the Save button is clicked
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    //loader('Saving changes...');
+    
+    // Get form input values
+    const address = document.querySelector('input[placeholder="123 Main St, City, State"]').value;
+    const mobile = document.querySelector('input[placeholder="+1 (555) 123-4567"]').value;
+
+    // Save to cookies (set to expire in 30 days)
+    setCookie('address', address, 30);
+    setCookie('mobile', mobile, 30);
+
+    Toastify({
+      text: 'Personal info saved successfully!',
+      duration: 3000,
+      gravity: 'top',
+      position: 'center',
+      style: { background: '#39cd33de' }
+    }).showToast();
+  });
+
+  goTo('navHome', 'dashboard');
+  goTo('navDeposit', 'deposit');
+  goTo('navPay', 'pay');
+  goTo('navSettings', 'settings');
+});  </script>
 </body>
 </html>
