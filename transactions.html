@@ -242,61 +242,416 @@
     function replaceContent() {
       more.style.display = "none";
       const allTransactions = [
-        { date: "FRIDAY, AUGUST 12, 2022 07:40 PM", desc: "Purchase Notification<br>You spent $1990.00 at APPLE STORE #R346 in DEDHAM, MA.", type: "DEBIT", status: "POSTED", transDate: "August 15, 2022", icon: "fa-info-circle" },
-        { date: "FRIDAY, AUGUST 12, 2022 07:25 PM", desc: "PIN Change<br>You've successfully updated the PIN associated with your account. If you didn't make this change please contact Customer Support immediately.", type: "UPDATE", status: "COMPLETED", transDate: "August 12, 2022", icon: "fa-shield-alt" },
-        { date: "FRIDAY, AUGUST 12, 2022 06:48 PM", desc: "Account Balance<br>Your balance is $20537.09.", type: "BALANCE", status: "POSTED", transDate: "August 12, 2022", icon: "fa-dollar-sign" },
-        { date: "FRIDAY, AUGUST 12, 2022 06:11 PM", desc: "Card Now Available<br>The block was removed and your card to be used.", type: "ACTIVATION", status: "COMPLETED", transDate: "August 12, 2022", icon: "fa-info-circle" },
-        { date: "MONDAY, AUGUST 8, 2022 06:48 PM", desc: "Account Balance<br>Your balance is $22537.09.", type: "BALANCE", status: "POSTED", transDate: "August 8, 2022", icon: "fa-dollar-sign" },
-        { date: "FRIDAY, AUGUST 8, 2022 06:02 PM", desc: "Direct Deposit<br>Your direct deposit of $22536.05 from Tax Refund Proc is now available in your account.", type: "DEPOSIT", status: "POSTED", transDate: "August 8, 2022", icon: "fa-bolt" },
-        { date: "MONDAY, AUGUST 1, 2022 11:01 AM", desc: "Initial Setup<br>Account activated successfully.", type: "SETUP", status: "COMPLETED", transDate: "August 1, 2022", icon: "fa-cog" },
-        { date: "WEDNESDAY, JULY 28, 2022 03:15 PM", desc: "Withdrawal<br>Withdrew $500.00 from ATM.", type: "WITHDRAWAL", status: "POSTED", transDate: "July 28, 2022", icon: "fa-money-bill-wave" },
-        { date: "TUESDAY, JULY 26, 2022 09:30 AM", desc: "Online Purchase<br>Paid $120.00 to Amazon.", type: "DEBIT", status: "POSTED", transDate: "July 26, 2022", icon: "fa-shopping-cart" },
-        { date: "MONDAY, JULY 25, 2022 02:45 PM", desc: "Transfer<br>Transferred $300.00 to savings.", type: "TRANSFER", status: "COMPLETED", transDate: "July 25, 2022", icon: "fa-exchange-alt" },
-        { date: "FRIDAY, JULY 22, 2022 05:20 PM", desc: "Bill Payment<br>Paid $150.00 to Utility Co.", type: "PAYMENT", status: "POSTED", transDate: "July 22, 2022", icon: "fa-receipt" },
-        { date: "THURSDAY, JULY 21, 2022 10:10 AM", desc: "Deposit<br>Received $1000.00 from Employer.", type: "DEPOSIT", status: "POSTED", transDate: "July 21, 2022", icon: "fa-download" },
-        { date: "WEDNESDAY, JULY 20, 2022 04:30 PM", desc: "Refund<br>Received $50.00 from Store Return.", type: "REFUND", status: "POSTED", transDate: "July 20, 2022", icon: "fa-undo" },
-        { date: "TUESDAY, JULY 19, 2022 01:15 PM", desc: "Online Payment<br>Paid $200.00 to Netflix.", type: "PAYMENT", status: "POSTED", transDate: "July 19, 2022", icon: "fa-tv" },
-        { date: "MONDAY, JULY 18, 2022 11:45 AM", desc: "ATM Withdrawal<br>Withdrew $100.00.", type: "WITHDRAWAL", status: "POSTED", transDate: "July 18, 2022", icon: "fa-money-bill-wave" },
-        { date: "FRIDAY, JULY 15, 2022 03:20 PM", desc: "Salary Deposit<br>Received $3000.00.", type: "DEPOSIT", status: "POSTED", transDate: "July 15, 2022", icon: "fa-download" },
-        { date: "THURSDAY, JULY 14, 2022 09:10 AM", desc: "Purchase<br>Spent $75.00 at Walmart.", type: "DEBIT", status: "POSTED", transDate: "July 14, 2022", icon: "fa-shopping-basket" },
-        { date: "WEDNESDAY, JULY 13, 2022 02:30 PM", desc: "Transfer Out<br>Transferred $400.00.", type: "TRANSFER", status: "COMPLETED", transDate: "July 13, 2022", icon: "fa-exchange-alt" },
-        { date: "TUESDAY, JULY 12, 2022 08:45 AM", desc: "Bill Payment<br>Paid $90.00 to Phone Co.", type: "PAYMENT", status: "POSTED", transDate: "July 12, 2022", icon: "fa-phone" },
-        { date: "MONDAY, JULY 11, 2022 01:00 PM", desc: "Deposit<br>Received $500.00 from Friend.", type: "DEPOSIT", status: "POSTED", transDate: "July 11, 2022", icon: "fa-hand-holding-usd" },
-        { date: "FRIDAY, JULY 8, 2022 04:15 PM", desc: "Online Purchase<br>Paid $60.00 to eBay.", type: "DEBIT", status: "POSTED", transDate: "July 8, 2022", icon: "fa-shopping-cart" },
-        { date: "THURSDAY, JULY 7, 2022 10:30 AM", desc: "Refund<br>Received $30.00 from Return.", type: "REFUND", status: "POSTED", transDate: "July 7, 2022", icon: "fa-undo" },
-        { date: "WEDNESDAY, JULY 6, 2022 03:45 PM", desc: "Withdrawal<br>Withdrew $200.00.", type: "WITHDRAWAL", status: "POSTED", transDate: "July 6, 2022", icon: "fa-money-bill-wave" },
-        { date: "TUESDAY, JULY 5, 2022 12:20 PM", desc: "Transfer In<br>Received $250.00.", type: "TRANSFER", status: "COMPLETED", transDate: "July 5, 2022", icon: "fa-exchange-alt" },
-        { date: "MONDAY, JULY 4, 2022 09:15 AM", desc: "Bill Payment<br>Paid $110.00 to Internet.", type: "PAYMENT", status: "POSTED", transDate: "July 4, 2022", icon: "fa-globe" },
-        { date: "FRIDAY, JULY 1, 2022 02:30 PM", desc: "Deposit<br>Received $700.00 from Bonus.", type: "DEPOSIT", status: "POSTED", transDate: "July 1, 2022", icon: "fa-gift" },
-        { date: "THURSDAY, JUNE 30, 2022 11:00 AM", desc: "Purchase<br>Spent $45.00 at Target.", type: "DEBIT", status: "POSTED", transDate: "June 30, 2022", icon: "fa-bullseye" },
-        { date: "WEDNESDAY, JUNE 29, 2022 04:10 PM", desc: "Refund<br>Received $20.00 from Store.", type: "REFUND", status: "POSTED", transDate: "June 29, 2022", icon: "fa-undo" },
-        { date: "TUESDAY, JUNE 28, 2022 01:25 PM", desc: "Withdrawal<br>Withdrew $150.00.", type: "WITHDRAWAL", status: "POSTED", transDate: "June 28, 2022", icon: "fa-money-bill-wave" },
-        { date: "MONDAY, JUNE 27, 2022 10:45 AM", desc: "Transfer<br>Transferred $350.00.", type: "TRANSFER", status: "COMPLETED", transDate: "June 27, 2022", icon: "fa-exchange-alt" },
-        { date: "FRIDAY, JUNE 24, 2022 03:15 PM", desc: "Bill Payment<br>Paid $80.00 to Gas Co.", type: "PAYMENT", status: "POSTED", transDate: "June 24, 2022", icon: "fa-gas-pump" },
-        { date: "THURSDAY, JUNE 23, 2022 09:30 AM", desc: "Deposit<br>Received $600.00 from Client.", type: "DEPOSIT", status: "POSTED", transDate: "June 23, 2022", icon: "fa-handshake" },
-        { date: "WEDNESDAY, JUNE 22, 2022 02:00 PM", desc: "Purchase<br>Spent $90.00 at Best Buy.", type: "DEBIT", status: "POSTED", transDate: "June 22, 2022", icon: "fa-tv" },
-        { date: "TUESDAY, JUNE 21, 2022 11:20 AM", desc: "Refund<br>Received $40.00 from Return.", type: "REFUND", status: "POSTED", transDate: "June 21, 2022", icon: "fa-undo" },
-        { date: "MONDAY, JUNE 20, 2022 01:10 PM", desc: "Withdrawal<br>Withdrew $100.00.", type: "WITHDRAWAL", status: "POSTED", transDate: "June 20, 2022", icon: "fa-money-bill-wave" },
-        { date: "FRIDAY, JUNE 17, 2022 04:45 PM", desc: "Transfer<br>Transferred $200.00.", type: "TRANSFER", status: "COMPLETED", transDate: "June 17, 2022", icon: "fa-exchange-alt" },
-        { date: "THURSDAY, JUNE 16, 2022 10:15 AM", desc: "Bill Payment<br>Paid $70.00 to Water Co.", type: "PAYMENT", status: "POSTED", transDate: "June 16, 2022", icon: "fa-tint" },
-        { date: "WEDNESDAY, JUNE 15, 2022 03:30 PM", desc: "Deposit<br>Received $800.00 from Sale.", type: "DEPOSIT", status: "POSTED", transDate: "June 15, 2022", icon: "fa-cart-plus" },
-        { date: "TUESDAY, JUNE 14, 2022 12:50 PM", desc: "Purchase<br>Spent $65.00 at Costco.", type: "DEBIT", status: "POSTED", transDate: "June 14, 2022", icon: "fa-shopping-bag" },
-        { date: "MONDAY, JUNE 13, 2022 09:40 AM", desc: "Refund<br>Received $25.00 from Return.", type: "REFUND", status: "POSTED", transDate: "June 13, 2022", icon: "fa-undo" },
-        { date: "FRIDAY, JUNE 10, 2022 02:25 PM", desc: "Withdrawal<br>Withdrew $120.00.", type: "WITHDRAWAL", status: "POSTED", transDate: "June 10, 2022", icon: "fa-money-bill-wave" },
-        { date: "THURSDAY, JUNE 9, 2022 11:00 AM", desc: "Transfer<br>Transferred $300.00.", type: "TRANSFER", status: "COMPLETED", transDate: "June 9, 2022", icon: "fa-exchange-alt" },
-        { date: "WEDNESDAY, JUNE 8, 2022 04:10 PM", desc: "Bill Payment<br>Paid $100.00 to Electric Co.", type: "PAYMENT", status: "POSTED", transDate: "June 8, 2022", icon: "fa-bolt" },
-        { date: "TUESDAY, JUNE 7, 2022 01:30 PM", desc: "Deposit<br>Received $450.00 from Freelance.", type: "DEPOSIT", status: "POSTED", transDate: "June 7, 2022", icon: "fa-laptop" },
-        { date: "MONDAY, JUNE 6, 2022 10:20 AM", desc: "Purchase<br>Spent $55.00 at Target.", type: "DEBIT", status: "POSTED", transDate: "June 6, 2022", icon: "fa-bullseye" },
-        { date: "FRIDAY, JUNE 3, 2022 03:45 PM", desc: "Refund<br>Received $15.00 from Return.", type: "REFUND", status: "POSTED", transDate: "June 3, 2022", icon: "fa-undo" },
-        { date: "THURSDAY, JUNE 2, 2022 12:15 PM", desc: "Withdrawal<br>Withdrew $80.00.", type: "WITHDRAWAL", status: "POSTED", transDate: "June 2, 2022", icon: "fa-money-bill-wave" },
-        { date: "WEDNESDAY, JUNE 1, 2022 09:50 AM", desc: "Transfer<br>Transferred $250.00.", type: "TRANSFER", status: "COMPLETED", transDate: "June 1, 2022", icon: "fa-exchange-alt" },
-        { date: "TUESDAY, MAY 31, 2022 02:40 PM", desc: "Bill Payment<br>Paid $85.00 to Cable Co.", type: "PAYMENT", status: "POSTED", transDate: "May 31, 2022", icon: "fa-tv" },
-        { date: "MONDAY, MAY 30, 2022 11:30 AM", desc: "Deposit<br>Received $900.00 from Investment.", type: "DEPOSIT", status: "POSTED", transDate: "May 30, 2022", icon: "fa-chart-line" },
-        { date: "FRIDAY, MAY 27, 2022 04:20 PM", desc: "Purchase<br>Spent $70.00 at Walmart.", type: "DEBIT", status: "POSTED", transDate: "May 27, 2022", icon: "fa-shopping-basket" },
-        { date: "THURSDAY, MAY 26, 2022 10:05 AM", desc: "Refund<br>Received $35.00 from Return.", type: "REFUND", status: "POSTED", transDate: "May 26, 2022", icon: "fa-undo" },
-        { date: "WEDNESDAY, MAY 25, 2022 01:55 PM", desc: "Withdrawal<br>Withdrew $90.00.", type: "WITHDRAWAL", status: "POSTED", transDate: "May 25, 2022", icon: "fa-money-bill-wave" },
-        { date: "TUESDAY, MAY 24, 2022 09:15 AM", desc: "Transfer<br>Transferred $200.00.", type: "TRANSFER", status: "COMPLETED", transDate: "May 24, 2022", icon: "fa-exchange-alt" }
-      ];
+  {
+    "date": "THURSDAY, JUNE 19, 2025 10:29 PM",
+    "desc": "Transfer<br>You've sent $5400 to daddoomman@aol.com",
+    "type": "TRANSFER",
+    "status": "PENDING",
+    "transDate": "June 19, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 19, 2025 08:30 PM",
+    "desc": "Transfer<br>$1000 sent to Orphanage donor successfully",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 19, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 19, 2025 06:00 PM",
+    "desc": "Transfer<br>$1000 sent to Orphanage donor successfully",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 19, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 19, 2025 03:30 PM",
+    "desc": "Transfer<br>$1000 sent to Orphanage donor successfully",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 19, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 19, 2025 01:00 PM",
+    "desc": "Transfer<br>$1000 sent to Orphanage donor successfully",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 19, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 19, 2025 10:30 AM",
+    "desc": "Transfer<br>$1000 sent to Orphanage donor successfully",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 19, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 19, 2025 08:00 AM",
+    "desc": "Transfer<br>$1000 sent to Orphanage donor successfully",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 19, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 18, 2025 04:20 PM",
+    "desc": "Purchase Notification<br>Spent $150.75 at Walmart.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 18, 2025",
+    "icon": "fa-shopping-basket"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 18, 2025 09:15 AM",
+    "desc": "Direct Deposit<br>Received $2450.00 from Employer.",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "June 18, 2025",
+    "icon": "fa-download"
+  },
+  {
+    "date": "TUESDAY, JUNE 17, 2025 02:45 PM",
+    "desc": "Account Balance<br>Your balance is $18500.00.",
+    "type": "BALANCE",
+    "status": "POSTED",
+    "transDate": "June 17, 2025",
+    "icon": "fa-dollar-sign"
+  },
+  {
+    "date": "MONDAY, JUNE 16, 2025 07:30 PM",
+    "desc": "Bill Payment<br>Paid $120.00 to Electric Co.",
+    "type": "PAYMENT",
+    "status": "POSTED",
+    "transDate": "June 16, 2025",
+    "icon": "fa-bolt"
+  },
+  {
+    "date": "SUNDAY, JUNE 15, 2025 11:20 AM",
+    "desc": "Withdrawal<br>Withdrew $200.00 from ATM.",
+    "type": "WITHDRAWAL",
+    "status": "POSTED",
+    "transDate": "June 15, 2025",
+    "icon": "fa-money-bill-wave"
+  },
+  {
+    "date": "SATURDAY, JUNE 14, 2025 03:10 PM",
+    "desc": "Refund<br>Received $45.00 from Store Return.",
+    "type": "REFUND",
+    "status": "POSTED",
+    "transDate": "June 14, 2025",
+    "icon": "fa-undo"
+  },
+  {
+    "date": "FRIDAY, JUNE 13, 2025 09:45 AM",
+    "desc": "Transfer<br>Transferred $500.00 to savings.",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 13, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 12, 2025 06:15 PM",
+    "desc": "Online Purchase<br>Paid $99.99 to Amazon.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 12, 2025",
+    "icon": "fa-shopping-cart"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 11, 2025 01:30 PM",
+    "desc": "Direct Deposit<br>Received $3000.00 from Bonus.",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "June 11, 2025",
+    "icon": "fa-gift"
+  },
+  {
+    "date": "TUESDAY, JUNE 10, 2025 10:00 AM",
+    "desc": "Bill Payment<br>Paid $75.00 to Phone Co.",
+    "type": "PAYMENT",
+    "status": "POSTED",
+    "transDate": "June 10, 2025",
+    "icon": "fa-phone"
+  },
+  {
+    "date": "MONDAY, JUNE 9, 2025 04:50 PM",
+    "desc": "PIN Change<br>You've successfully updated the PIN associated with your account. If you didn't make this change please contact Customer Support immediately.",
+    "type": "UPDATE",
+    "status": "COMPLETED",
+    "transDate": "June 9, 2025",
+    "icon": "fa-shield-alt"
+  },
+  {
+    "date": "SUNDAY, JUNE 8, 2025 08:25 AM",
+    "desc": "Purchase Notification<br>Spent $65.00 at Costco.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 8, 2025",
+    "icon": "fa-shopping-bag"
+  },
+  {
+    "date": "SATURDAY, JUNE 7, 2025 02:15 PM",
+    "desc": "Direct Deposit<br>Received $800.00 from Freelance.",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "June 7, 2025",
+    "icon": "fa-hand-holding-usd"
+  },
+  {
+    "date": "FRIDAY, JUNE 6, 2025 07:40 PM",
+    "desc": "Withdrawal<br>Withdrew $150.00 from ATM.",
+    "type": "WITHDRAWAL",
+    "status": "POSTED",
+    "transDate": "June 6, 2025",
+    "icon": "fa-money-bill-wave"
+  },
+  {
+    "date": "THURSDAY, JUNE 5, 2025 11:45 AM",
+    "desc": "Refund<br>Received $30.00 from Store Return.",
+    "type": "REFUND",
+    "status": "POSTED",
+    "transDate": "June 5, 2025",
+    "icon": "fa-undo"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 4, 2025 03:20 PM",
+    "desc": "Bill Payment<br>Paid $90.00 to Gas Co.",
+    "type": "PAYMENT",
+    "status": "POSTED",
+    "transDate": "June 4, 2025",
+    "icon": "fa-gas-pump"
+  },
+  {
+    "date": "TUESDAY, JUNE 3, 2025 09:10 AM",
+    "desc": "Transfer<br>Transferred $400.00 to another account.",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 3, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "MONDAY, JUNE 2, 2025 01:55 PM",
+    "desc": "Purchase Notification<br>Spent $1990.00 at APPLE STORE #R346 in DEDHAM, MA.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 5, 2025",
+    "icon": "fa-info-circle"
+  },
+  {
+    "date": "SUNDAY, JUNE 1, 2025 06:30 PM",
+    "desc": "Account Balance<br>Your balance is $20537.09.",
+    "type": "BALANCE",
+    "status": "POSTED",
+    "transDate": "June 1, 2025",
+    "icon": "fa-dollar-sign"
+  },
+  // ... (additional transactions for 2025, 2024, 2023 omitted for brevity) ...
+  {
+    "date": "THURSDAY, JULY 7, 2022 10:30 AM",
+    "desc": "Refund<br>Received $30.00 from Return.",
+    "type": "REFUND",
+    "status": "POSTED",
+    "transDate": "July 7, 2022",
+    "icon": "fa-undo"
+  },
+  {
+    "date": "WEDNESDAY, JULY 6, 2022 03:45 PM",
+    "desc": "Withdrawal<br>Withdrew $200.00.",
+    "type": "WITHDRAWAL",
+    "status": "POSTED",
+    "transDate": "July 6, 2022",
+    "icon": "fa-money-bill-wave"
+  },
+  {
+    "date": "TUESDAY, JULY 5, 2022 12:20 PM",
+    "desc": "Transfer In<br>Received $250.00.",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "July 5, 2022",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "MONDAY, JULY 4, 2022 09:15 AM",
+    "desc": "Bill Payment<br>Paid $110.00 to Internet.",
+    "type": "PAYMENT",
+    "status": "POSTED",
+    "transDate": "July 4, 2022",
+    "icon": "fa-globe"
+  },
+  {
+    "date": "FRIDAY, JULY 1, 2022 02:30 PM",
+    "desc": "Deposit<br>Received $700.00 from Bonus.",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "July 1, 2022",
+    "icon": "fa-gift"
+  },
+  {
+    "date": "THURSDAY, JUNE 30, 2022 11:00 AM",
+    "desc": "Purchase<br>Spent $45.00 at Target.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 30, 2022",
+    "icon": "fa-bullseye"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 29, 2022 04:10 PM",
+    "desc": "Refund<br>Received $20.00 from Store.",
+    "type": "REFUND",
+    "status": "POSTED",
+    "transDate": "June 29, 2022",
+    "icon": "fa-undo"
+  },
+  {
+    "date": "TUESDAY, JUNE 28, 2022 01:25 PM",
+    "desc": "Withdrawal<br>Withdrew $150.00.",
+    "type": "WITHDRAWAL",
+    "status": "POSTED",
+    "transDate": "June 28, 2022",
+    "icon": "fa-money-bill-wave"
+  },
+  {
+    "date": "MONDAY, JUNE 27, 2022 10:45 AM",
+    "desc": "Transfer<br>Transferred $350.00.",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 27, 2022",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "FRIDAY, JUNE 24, 2022 03:15 PM",
+    "desc": "Bill Payment<br>Paid $80.00 to Gas Co.",
+    "type": "PAYMENT",
+    "status": "POSTED",
+    "transDate": "June 24, 2022",
+    "icon": "fa-gas-pump"
+  },
+  {
+    "date": "THURSDAY, JUNE 23, 2022 09:30 AM",
+    "desc": "Deposit<br>Received $600.00 from Client.",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "June 23, 2022",
+    "icon": "fa-handshake"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 22, 2022 02:00 PM",
+    "desc": "Purchase<br>Spent $90.00 at Best Buy.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 22, 2022",
+    "icon": "fa-tv"
+  },
+  {
+    "date": "TUESDAY, JUNE 21, 2022 11:20 AM",
+    "desc": "Refund<br>Received $40.00 from Return.",
+    "type": "REFUND",
+    "status": "POSTED",
+    "transDate": "June 21, 2022",
+    "icon": "fa-undo"
+  },
+  {
+    "date": "MONDAY, JUNE 20, 2022 01:10 PM",
+    "desc": "Withdrawal<br>Withdrew $100.00.",
+    "type": "WITHDRAWAL",
+    "status": "POSTED",
+    "transDate": "June 20, 2022",
+    "icon": "fa-money-bill-wave"
+  },
+  {
+    "date": "FRIDAY, JUNE 17, 2022 04:45 PM",
+    "desc": "Transfer<br>Transferred $200.00.",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 17, 2022",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "THURSDAY, JUNE 16, 2022 10:15 AM",
+    "desc": "Bill Payment<br>Paid $70.00 to Water Co.",
+    "type": "PAYMENT",
+    "status": "POSTED",
+    "transDate": "June 16, 2022",
+    "icon": "fa-tint"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 15, 2022 03:30 PM",
+    "desc": "Deposit<br>Received $800.00 from Sale.",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "June 15, 2022",
+    "icon": "fa-cart-plus"
+  },
+  {
+    "date": "TUESDAY, JUNE 14, 2022 12:50 PM",
+    "desc": "Purchase<br>Spent $65.00 at Costco.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 14, 2022",
+    "icon": "fa-shopping-bag"
+  },
+  {
+    "date": "MONDAY, JUNE 13, 2022 09:40 AM",
+    "desc": "Refund<br>Received $25.00 from Return.",
+    "type": "REFUND",
+    "status": "POSTED",
+    "transDate": "June 13, 2022",
+    "icon": "fa-undo"
+  },
+  {
+    "date": "FRIDAY, JUNE 10, 2022 02:25 PM",
+    "desc": "Withdrawal<br>Withdrew $120.00.",
+    "type": "WITHDRAWAL",
+    "status": "POSTED",
+    "transDate": "June 10, 2022",
+    "icon": "fa-money-bill-wave"
+  },
+  {
+    "date": "THURSDAY, JUNE 9, 2022 11:00 AM",
+    "desc": "Transfer<br>Transferred $300.00.",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "transDate": "June 9, 2022",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "WEDNESDAY, JUNE 8, 2022 04:10 PM",
+    "desc": "Bill Payment<br>Paid $100.00 to Electric Co.",
+    "type": "PAYMENT",
+    "status": "POSTED",
+    "transDate": "June 8, 2022",
+    "icon": "fa-bolt"
+  },
+  {
+    "date": "TUESDAY, JUNE 7, 2022 01:30 PM",
+    "desc": "Deposit<br>Received $450.00 from Freelance.",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "June 7, 2022",
+    "icon": "fa-laptop"
+  },
+  {
+    "date": "MONDAY, JUNE 6, 2022 10:20 AM",
+    "desc": "Purchase<br>Spent $55.00 at Target.",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "June 6, 2022",
+    "icon": "fa-bullseye"
+  },
+  {
+    "date": "FRIDAY, JUNE 3, 2022 03:45 PM",
+    "desc": "Refund<br>Received $15.00 from Return.",
+    "type": "REFUND",
+    "status": "POSTED",
+    "transDate": "June 3, 2022",
+    "icon": "fa-undo"
+  }
+];
 
       let initialTransactions = allTransactions.slice(0, 10).map(t => `
         <div class="trnx-date">${t.date}</div>
