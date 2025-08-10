@@ -28,6 +28,7 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      user-select: none;
     }
     .header {
       display: flex;
@@ -242,6 +243,62 @@
     function replaceContent() {
       more.style.display = "none";
       const allTransactions = [
+  {
+    "date": "FRIDAY, August 8, 2025 7:30 AM",
+    "desc": "Transfer<br>You've sent $2700 to $Tiffany",
+    "type": "TRANSFER TO CASH APP",
+    "status": "SENT",
+    "transDate": "August 8, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+      "date": "WEDNESDAY, August 6, 2025 9:36 PM",
+    "desc": "Transfer<br>You've sent $3000 to $Jackspartin",
+    "type": "TRANSFER TO CASH APP",
+    "status": "PENDING",
+    "transDate": "August 6, 2025",
+    "icon": "fa-exclamation-triangle"
+  },
+  {
+    "date": "SUNDAY, August 3, 2025 7:31 PM",
+    "desc": "Transfer<br>You've sent $18000 to rayoilcompany@gmail.com",
+    "type": "TRANSFER TO PAYPAL",
+    "status": "SENT",
+    "transDate": "August 3, 2025",
+    "icon": "fab fa-paypal"
+  },
+  {
+    "date": "SUNDAY, August 3, 2025 9:54 AM",
+    "desc": "Transfer<br>You've sent $20,000 to $krcompanytag",
+    "type": "TRANSFER TO CASH APP",
+    "status": "SENT",
+    "transDate": "August 3, 2025",
+    "icon": "fa-exchange-alt"
+  },
+  {
+    "date": "SATURDAY, August 2, 2025 8:09 AM",
+    "desc": "Crypto Deposited <br>Received $76,678 from crypto monthly earnings",
+    "type": "DEPOSIT",
+    "status": "POSTED",
+    "transDate": "August 2, 2025",
+    "icon": "fab fa-bitcoin"
+  },
+  {
+    "date": "WEDNESDAY, July 30, 2025 4:55 AM",
+    "desc": "Apple bills <br>Spent $450 at Apple Inc",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "July 30, 2025",
+    "icon": "fab fa-apple" 
+  },
+  {
+    "date": "MONDAY, July 28, 2025 2:37 PM",
+    "desc": "Purchase Notification <br>Spent $3100 at Nods store",
+    "type": "DEBIT",
+    "status": "POSTED",
+    "transDate": "July 28, 2025",
+    "icon": "fa-shopping-basket"
+  },
   {
     "date": "WEDNESDAY, July 23, 2025 10:31 AM",
     "desc": "Transfer<br>You've sent €1100 to alessandrolobocchiaro@gmail.com",
@@ -768,7 +825,7 @@
     "type": "DEBIT",
     "status": "POSTED",
     "transDate": "June 5, 2025",
-    "icon": "fa-info-circle"
+    "icon": "fab fa-apple"
   },
   {
     "date": "SUNDAY, JUNE 1, 2025 06:30 PM",
